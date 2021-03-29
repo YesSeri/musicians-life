@@ -14,19 +14,19 @@ love.load = function ()
         return p
     end
     keys = {
-        Note:new('c', "assets/piano/1.C-low.ogg", pointWhite(0), 'w'),
-        Note:new('d', "assets/piano/3.D.ogg", pointWhite(1), 'w'),
-        Note:new('e', "assets/piano/5.E.ogg", pointWhite(2), 'w'),
-        Note:new('f', "assets/piano/6.F.ogg", pointWhite(3), 'w'),
-        Note:new('g', "assets/piano/8.G.ogg", pointWhite(4), 'w'),
-        Note:new('a', "assets/piano/10.A.ogg", pointWhite(5), 'w'),
-        Note:new('b', "assets/piano/12.B.ogg", pointWhite(6), 'w'),
-        Note:new('C', "assets/piano/13.C-high.ogg", pointWhite(7), 'w'),
-        Note:new('c#', "assets/piano/2.C#.ogg", pointBlack(0), 'b'),
-        Note:new('d#', "assets/piano/4.D#.ogg", pointBlack(1), 'b'),
-        Note:new('f#', "assets/piano/7.F#.ogg", pointBlack(3), 'b'),
-        Note:new('g#', "assets/piano/9.G#.ogg", pointBlack(4), 'b'),
-        Note:new('a#', "assets/piano/11.A#.ogg", pointBlack(5), 'b'),
+        Note:new('c', "audio/1.C-low.ogg", pointWhite(0), 'w'),
+        Note:new('d', "audio/3.D.ogg", pointWhite(1), 'w'),
+        Note:new('e', "audio/5.E.ogg", pointWhite(2), 'w'),
+        Note:new('f', "audio/6.F.ogg", pointWhite(3), 'w'),
+        Note:new('g', "audio/8.G.ogg", pointWhite(4), 'w'),
+        Note:new('a', "audio/10.A.ogg", pointWhite(5), 'w'),
+        Note:new('b', "audio/12.B.ogg", pointWhite(6), 'w'),
+        Note:new('C', "audio/13.C-high.ogg", pointWhite(7), 'w'),
+        Note:new('c#', "audio/2.C#.ogg", pointBlack(0), 'b'),
+        Note:new('d#', "audio/4.D#.ogg", pointBlack(1), 'b'),
+        Note:new('f#', "audio/7.F#.ogg", pointBlack(3), 'b'),
+        Note:new('g#', "audio/9.G#.ogg", pointBlack(4), 'b'),
+        Note:new('a#', "audio/11.A#.ogg", pointBlack(5), 'b'),
     }
     timer = 3
 end
@@ -86,8 +86,9 @@ end
 function love.mousepressed(x, y, button, istouch)
    if button == 1 then
         for i = #keys, 1, -1 do
-            if keys[i]:isClicked({x=x, y=y}) then
-                keys[i]:play()
+            key = keys[i]
+            if key:isClicked({x=x, y=y}) then
+                key:play()
                 return
             end
         end
