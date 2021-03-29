@@ -1,5 +1,5 @@
 require 'key'
-spf = 2.0
+require 'socket'
 local offset = 60
 love.load = function () 
     counter = 1
@@ -31,9 +31,14 @@ love.load = function ()
     timer = 3
 end
 love.update = function (dt) 
-    timer = timer + dt
-    if timer > spf then
-        timer = 0
+    for k, v in ipairs(keys) do
+        if v.active.is == true then 
+            v.active.time = v.active.time + dt
+            if v.active.time > 0.2 then
+                v.active.is = false
+                v.active.time = 0
+            end
+        end
     end
 end
 function love.keypressed(key)
