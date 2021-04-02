@@ -16,73 +16,44 @@ love.load = function ()
         return p
     end
     keys = {
-        Note:new('c', "audio/1.C-low.ogg", pointWhite(0), 'w'),
-        Note:new('d', "audio/3.D.ogg", pointWhite(1), 'w'),
-        Note:new('e', "audio/5.E.ogg", pointWhite(2), 'w'),
-        Note:new('f', "audio/6.F.ogg", pointWhite(3), 'w'),
-        Note:new('g', "audio/8.G.ogg", pointWhite(4), 'w'),
-        Note:new('a', "audio/10.A.ogg", pointWhite(5), 'w'),
-        Note:new('b', "audio/12.B.ogg", pointWhite(6), 'w'),
-        Note:new('C', "audio/13.C-high.ogg", pointWhite(7), 'w'),
-        Note:new('c#', "audio/2.C#.ogg", pointBlack(0), 'b'),
-        Note:new('d#', "audio/4.D#.ogg", pointBlack(1), 'b'),
-        Note:new('f#', "audio/7.F#.ogg", pointBlack(3), 'b'),
-        Note:new('g#', "audio/9.G#.ogg", pointBlack(4), 'b'),
-        Note:new('a#', "audio/11.A#.ogg", pointBlack(5), 'b'),
+        Note:new('c', "flaudio/1.C-low.ogg", pointWhite(0), 'w', 's'),
+        Note:new('d', "flaudio/3.D.ogg", pointWhite(1), 'w', 'd'),
+        Note:new('e', "flaudio/5.E.ogg", pointWhite(2), 'w', 'f'),
+        Note:new('f', "flaudio/6.F.ogg", pointWhite(3), 'w', 'g'),
+        Note:new('g', "flaudio/8.G.ogg", pointWhite(4), 'w', 'h'),
+        Note:new('a', "flaudio/10.A.ogg", pointWhite(5), 'w', 'j'),
+        Note:new('b', "flaudio/12.B.ogg", pointWhite(6), 'w', 'k'),
+        Note:new('C', "flaudio/13.C-high.ogg", pointWhite(7), 'w', 'l'),
+        Note:new('c#', "flaudio/2.C#.ogg", pointBlack(0), 'b', 'e'),
+        Note:new('d#', "flaudio/4.D#.ogg", pointBlack(1), 'b', 'r'),
+        Note:new('f#', "flaudio/7.F#.ogg", pointBlack(3), 'b', 'y'),
+        Note:new('g#', "flaudio/9.G#.ogg", pointBlack(4), 'b', 'u'),
+        Note:new('a#', "flaudio/11.A#.ogg", pointBlack(5), 'b', 'i'),
     }
     timer = 3
 end
 love.update = function (dt) 
     for k, v in ipairs(keys) do
-        if v.active.is == true then 
-            v.active.time = v.active.time + dt
-            if v.active.time > 0.2 then
-                v.active.is = false
-                v.active.time = 0
-            end
-        end
+		if v.release == true then
+			print(v.sound:getVolume())
+			v.sound:setVolume()
+		end
     end
 end
 function love.keypressed(key)
-   if key == "e" then
-        keys[1]:play()
-   end
-   if key == "r" then
-        keys[2]:play()
-   end
-   if key == "t" then
-        keys[3]:play()
-   end
-   if key == "y" then
-        keys[4]:play()
-   end
-   if key == "u" then
-        keys[5]:play()
-   end
-   if key == "i" then
-        keys[6]:play()
-   end
-   if key == "o" then
-        keys[7]:play()
-   end
-   if key == "p" then
-        keys[8]:play()
-   end
-   if key == "4" then
-        keys[9]:play()
-   end
-   if key == "5" then
-        keys[10]:play()
-   end
-   if key == "7" then
-        keys[11]:play()
-   end
-   if key == "8" then
-        keys[12]:play()
-   end
-   if key == "9" then
-        keys[13]:play()
-   end
+    for i, k in ipairs(keys) do
+		if key == k.shortcut then
+			k:play()
+		end
+    end
+end
+
+function love.keyreleased(key)
+    for i, k in ipairs(keys) do
+		if key == k.shortcut then
+			k:releaseKey()
+		end
+	end
 end
 
 function love.mousepressed(x, y, button, istouch)

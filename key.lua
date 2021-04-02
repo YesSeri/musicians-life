@@ -1,22 +1,22 @@
 Note = {}
 
-function Note:new(name, file, point, color)
+function Note:new(name, file, point, color, shortcut)
   o = {}
   o.name = name
   o.sound = love.audio.newSource(file, "static")
   o.point = point
   o.color = color
-  o.active = { is = false, time = 0 }
+  o.active = false
+  o.release = false
+  o.shortcut = shortcut
   setmetatable(o, self)
   self.__index = self
   return o
 end
 
 function Note:play()
-
     local position = self.sound:tell()
-    self.active.is = true
-    self.active.timer = 0
+    self.active = true
     if self:isPlaying() then
         self.sound:seek(0)
     else
@@ -30,6 +30,13 @@ end
 function Note:isPlaying()
    return self.sound:isPlaying()
 end
+function Note:releaseKey()
+    if self:isPlaying() then
+        self.release = true
+        self.active = false
+        self.sound:stop()
+    end
+end
 function Note:isClicked(mp)
     local p = self.point
     if mp.x >= p.x and mp.x <= p.x + p.dx and mp.y >= p.y and mp.y <= p.y + p.dy then
@@ -40,13 +47,13 @@ end
 function Note:draw()
     local p = self.point
     if self.color == 'w' then
-        if self.active.is then
+        if self.active then
             love.graphics.setColor(0.8,0.8,0.8,1)
         else
             love.graphics.setColor(1,1,1,1)
         end
     else
-        if self.active.is then
+        if self.active then
             love.graphics.setColor(0.3,0.3,0.3,1)
         else
             love.graphics.setColor(0,0,0,1)
