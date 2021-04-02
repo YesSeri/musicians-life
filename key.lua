@@ -3,7 +3,7 @@ Note = {}
 function Note:new(name, file, point, color, shortcut)
   o = {}
   o.name = name
-  o.sound = love.audio.newSource(file, "static")
+  o.source = love.audio.newSource(file, "static")
   o.point = point
   o.color = color
   o.active = false
@@ -15,12 +15,14 @@ function Note:new(name, file, point, color, shortcut)
 end
 
 function Note:play()
-    local position = self.sound:tell()
+    local position = self.source:tell()
     self.active = true
+    self.source:setVolume(1)
     if self:isPlaying() then
-        self.sound:seek(0)
+        self.source:seek(0)
+        self.release = false
     else
-        self.sound:play()
+        self.source:play()
     end
 end
 
@@ -28,14 +30,13 @@ function Note:getName()
     return self.name
 end
 function Note:isPlaying()
-   return self.sound:isPlaying()
+   return self.source:isPlaying()
 end
 function Note:releaseKey()
     if self:isPlaying() then
         self.release = true
-        self.active = false
-        self.sound:stop()
     end
+    self.active = false
 end
 function Note:isClicked(mp)
     local p = self.point
