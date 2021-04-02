@@ -1,10 +1,12 @@
 require 'key'
 require 'socket'
-local offset = 60
 love.load = function () 
-    counter = 1
+     love.window.setMode(900, 500, { resizable=false, vsync=false })
+     local width = love.graphics.getWidth()
+     local height = love.graphics.getHeight()
+     local offset = width / 8
     local pointWhite = function(z) 
-        return {x = 100 + offset * z + offset * 0.02, y = 100, dx = offset - offset * 0.02, dy = 150} 
+        return {x = offset * z + offset * 0.02, y = 0, dx = offset - offset * 0.02, dy = height} 
     end
     local pointBlack = function(z) 
         local p = pointWhite(z)
