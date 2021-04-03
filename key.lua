@@ -18,9 +18,10 @@ function Note:play()
     local position = self.source:tell()
     self.active = true
     self.source:setVolume(1)
+    self.release = false
     if self:isPlaying() then
-        self.source:seek(0)
-        self.release = false
+        self.source:stop()
+        self.source:play()
     else
         self.source:play()
     end

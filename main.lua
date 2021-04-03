@@ -40,7 +40,6 @@ love.update = function(dt)
             if nVol < 0 then 
                 v.release = false
                 s:stop()
-                s:setVolume(1)
             end
         end
     end
